@@ -34,6 +34,7 @@ class Test_Item:
     def test_item_price_is_not_float(self):
         with pytest.raises(ParamNotValidated):
             Item(name="test", price="1.0", item_type=ItemTypeEnum.FOOD, admin_permission=True)
+            
     def test_item_price_is_negative(self):
         with pytest.raises(ParamNotValidated):
             Item(name="test", price=-1.0, item_type=ItemTypeEnum.FOOD, admin_permission=True)
