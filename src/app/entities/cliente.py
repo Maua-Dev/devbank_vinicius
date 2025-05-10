@@ -45,17 +45,17 @@ class Cliente:
             return (False, "Agency is required")
         if type(agency) != str:
             return (False, "Agency must be a string")
-        if len(agency) != 4:
-            return (False, "Agency need 4 characters long")
-        return (True, "")
-
+        if not re.fullmatch(r"^\d{4}$"):
+            return ("Agency must be a 4-digit number")
+        return (True, "") 
+    
     @staticmethod
     def validate_account(account: str) -> Tuple[bool, str]:
         if account is None:
             return (False, "Account is required")
         if type(account) != str:
             return (False, "Account must be a string")
-        if not re.fullmatch("^\d{5}-\d$", account):
+        if not re.fullmatch(r"^\d{5}-\d$", account):
             return (False, "Account must be in the format 'XXXXX-X'")
         return (True, "")
 
