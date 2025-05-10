@@ -73,4 +73,4 @@ class Cliente:
         return self.name == other.name and self.agency == other.agency and self.account == other.account and self.current_balance == other.current_balance
     
     def __repr__(self):
-        return f"Item(name={self.name}, agency={self.agency}, account={self.account}, current_balance={self.current_balance})"
+        return f"Cliente(name={self.name}, agency={self.agency}, account={self.account}, current_balance={self.current_balance})"
