@@ -1,5 +1,6 @@
 from typing import Tuple
 from ..errors.entity_errors import ParamNotValidated
+from ..enums.transacao_type_enum import Transacao_type
 import re
 
 class Transacao:
@@ -33,10 +34,8 @@ class Transacao:
     def validate_type(type: str) -> Tuple[bool, str]:
         if type is None:
             return (False, "Type is required")
-        if type(type) != str:
-            return (False, "Type must be a string")
-        if type != ("deposit") or type!= ("withdraw"):
-            return (False, "Type must be is a deposit or withdraw")
+        if type != (Transacao_type):
+            return (False, "Type must be a 'Deposit' or 'Withdraw'")
         return (True, "")
     
     @staticmethod

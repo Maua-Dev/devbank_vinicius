@@ -3,7 +3,7 @@ from src.app.entities.cliente import Cliente
 from src.app.errors.entity_errors import ParamNotValidated
 
 class Test_Cliente:
-    def test_cliete(self):
+    def test_cliente(self):
         cliente = Cliente("victor", "1234", "12345-6", 1000.0)
         assert cliente.name == "victor"
         assert cliente.agency == "1234"
@@ -60,9 +60,4 @@ class Test_Cliente:
 
     def test_account_is_negative(self):
         with pytest.raises(ParamNotValidated):
-            Cliente(name = "victor", agency="1234", account="12345-6", current_balance=-1.0)
-
-    
-    
-    
-    
+            Cliente(name = "victor", agency="1234", account="12345-6", current_balance=-1.0)  
