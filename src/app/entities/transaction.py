@@ -1,15 +1,15 @@
 from typing import Tuple
 from ..errors.entity_errors import ParamNotValidated
-from ..enums.transacao_type_enum import Transacao_type
+from ..enums.transaction_type_enum import Transaction_type
 import re
 
-class Transacao:
-    type: str
+class Transaction:
+    type: Transaction_type
     value: float
     current_balance: float
     timestamp: float
 
-    def __init__(self, type: str=None, value: float=None, current_balance: float=None, timestamp: float=None):
+    def __init__(self, type:Transaction_type=None, value: float=None, current_balance: float=None, timestamp: float=None):
         validation_type= self.validate_type(type)
         if validation_type[0] is False:
             raise ParamNotValidated("type", validation_type[1])
@@ -28,14 +28,14 @@ class Transacao:
         validation_timestamp = self.validate_timestamp(timestamp)
         if validation_timestamp[0] is False:
             raise ParamNotValidated("timestamp", validation_timestamp[1])
-        self.current_timestamp = timestamp  
+        self.timestamp = timestamp  
 
     @staticmethod
-    def validate_type(type: str) -> Tuple[bool, str]:
+    def validate_type(type: Transaction_type) -> Tuple[bool, str]:
         if type is None:
             return (False, "Type is required")
-        if type != (Transacao_type):
-            return (False, "Type must be a 'Deposit' or 'Withdraw'")
+        if not isinstance( type, Transaction_type):
+            return (False, "Type must be a Transaction_type")
         return (True, "")
     
     @staticmethod
@@ -43,7 +43,7 @@ class Transacao:
         if value is None:
             return (False, "Value is required")
         if type(value) != float:
-            return (False, "Type must be a float")
+            return (False, "Value must be a float")
         if value < 0:
             return(False, "Value need to be a over than 0")
         return (True, "")
@@ -53,7 +53,7 @@ class Transacao:
         if current_balance is None:
             return (False, "Current balance is required")
         if type(current_balance) != float:
-            return (False, "Agency must be a float")
+            return (False, "Current balance must be a float")
         if current_balance < 0:
             return (False, "Current balance need to be over than 0")
         return (True, "")
@@ -68,8 +68,16 @@ class Transacao:
             return (False, "Timestamp need to be over than 0")
         return (True, "")
     
+    def to_dict(self):
+        return {
+            "type" : self.type.value, 
+            "value" : self.value,
+            "current_balance" : self.current_balance,
+            "timestamp" : self.timestamp
+        }
+    
     def __eq__(self,other):
         return self.type == other.type and self.value == other.value and self.current_balance == other.current_balance and self.timestamp == other.timestamp
     
     def __repr__(self):
-        return f"Transacao(type={self.type}, value={self.value}, current_balance={self.current_balance}, timestamp={self.timestamp})"
+        return f"Transaction(type={self.type}, value={self.value}, current_balance={self.current_balance}, timestamp={self.timestamp})"

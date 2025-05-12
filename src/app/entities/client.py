@@ -2,7 +2,7 @@ from typing import Tuple
 from ..errors.entity_errors import ParamNotValidated
 import re
 
-class Cliente:
+class Client:
     name: str
     agency: str
     account: str
@@ -43,19 +43,15 @@ class Cliente:
     def validate_agency(agency: str) -> Tuple[bool, str]:
         if agency is None:
             return (False, "Agency is required")
-        if type(agency) != str:
-            return (False, "Agency must be a string")
-        if not re.fullmatch(r"^\d{4}$"):
-            return ("Agency must be a 4-digit number")
+        if not re.match(r"^\d{4}$", agency):
+            return (False, "Agency must be a 4-digit number")
         return (True, "") 
     
     @staticmethod
     def validate_account(account: str) -> Tuple[bool, str]:
         if account is None:
             return (False, "Account is required")
-        if type(account) != str:
-            return (False, "Account must be a string")
-        if not re.fullmatch(r"^\d{5}-\d$", account):
+        if not re.match(r"^\d{5}-\d$", account):
             return (False, "Account must be in the format 'XXXXX-X'")
         return (True, "")
 
@@ -68,9 +64,17 @@ class Cliente:
         if current_balance < 0:
             return (False, "Current balance need to be over than 0")
         return (True, "")
+    
+    def to_dict(self):
+        return {
+            "name" : self.name,
+            "agency" : self.agency,
+            "account" : self.account,
+            "current_balance" : self.current_balance
+        }
 
     def __eq__(self,other):
         return self.name == other.name and self.agency == other.agency and self.account == other.account and self.current_balance == other.current_balance
     
     def __repr__(self):
-        return f"Cliente(name={self.name}, agency={self.agency}, account={self.account}, current_balance={self.current_balance})"
+        return f"Client(name={self.name}, agency={self.agency}, account={self.account}, current_balance={self.current_balance})"
